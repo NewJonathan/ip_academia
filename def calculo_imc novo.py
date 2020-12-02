@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov 30 22:15:10 2020
+Created on Tue Dec  1 20:46:51 2020
 
 @author: macbookpro
 """
+
 
 def calculo_imc (peso, altura):
     imc = peso / (altura)**2
@@ -89,16 +90,6 @@ media_idades = [(soma_idades) / len(lista_idades)]
 media_pesos = [(soma_pesos) / len(lista_pesos)]
 media_alturas = [(soma_alturas) / len(lista_alturas)]
 media_imc = [(soma_imc) / len(lista_imc)]
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
