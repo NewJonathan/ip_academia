@@ -2,27 +2,24 @@ from tkinter import *
 
 def cadastro():
     def contador():
-        arquivo = open("dados.txt", "a+")#abre arquivo dos dados
-        cadastro = open("cadastro.txt", "a+")#abre arquivo dos num de cadastro
-        nome=entrada1.get()#recebe oq foi escrito em entrada1
-        idade=entrada2.get()#recebe entrada2
-        peso=entrada3.get()#recebe entrada3
-        altura=entrada4.get()#recebe entrada4
-        celular=entrada5.get()#recebe entrada5
-        objetivo=entrada6.get()#recebe entrada6
-        listadados=[f'\n{nome}\n{idade}\n{peso}\n{altura}\n{celular}\n{objetivo}']#coloca oq foi escrito na lista
-        arquivo.writelines(listadados)#escreve a lista no arquivo de dados(cada elemento, uma linha)
-        arquivo.seek(0)#coloca poteiro no inicio do arquivo de dados
-        linhas=arquivo.readlines()#lê todas as linhas do arquivo de dados e gera lista
-        numc=len(linhas)#lê tamanho da lista e armazena em variavel
-        cadastro.write(f'{numc}\n')#escreve essa variavel no arquivo de cadastro
+        arquivo = open("dados.txt", "a+")
+        nome=entrada1.get()
+        idade=entrada2.get()
+        peso=entrada3.get()
+        altura=entrada4.get()
+        celular=entrada5.get()
+        objetivo=entrada6.get()
+        listadados=[f'\n{nome}\n{idade}\n{peso}\n{altura}\n{celular}\n{objetivo}']
+        arquivo.writelines(listadados)
+        arquivo.seek(0)
+        linhas=arquivo.readlines()
+        numc=len(linhas)
         ncad=numc/6
-        cad=Tk()
-        cad.title('N° do cadastro')
-        Label(cad, text=f'{ncad}',font='None 14 bold').pack()
-        cad.pack()
         arquivo.close()
         cadastro.close()
+    arquivo = open("dados.txt", "a+")
+    arquivo.seek(0)
+    ncad=(len(arquivo.readlines())/6)+1
     janela=Tk()
     janela.title('Cadastro')
     Button(janela, text="Cadastrar",width=22, bg='white', fg='black',command=contador, font='None 14 bold').grid(row=8, column=0,columnspan=3, sticky=W)
@@ -44,18 +41,41 @@ def cadastro():
     Label(janela, text="Altura").grid(row=4, column=0, sticky=W)
     Label(janela, text="Telefone").grid(row=5, column=0, sticky=W)
     Label(janela, text="Objetivo:\n1:Hipertrofia\n2:Emagrecimento\n3:Potência").grid(row=6, column=0, sticky=W)
-
+    Label(janela, text='N° de cadastro:\n%d'%ncad).grid(row=6, column=2, sticky=W)
 def consulta():
     def pegardados():
         def calculo_imc (peso, altura):
             imc = peso / (altura)**2
             return imc
-        arquivo = open("dados.txt", "a+")#abre arquivo dos dados
-        cadastro = open("cadastro.txt", "a+")#abre arquivo dos num de cadastro
+        def rotina():
+            resultado=None
+            dict_objetivo = {'1': '3 Séries de 8-12 repetições com 1 min de descanso entre elas\n '
+                             'PEITO: Supino Reto, Cross Over\n'
+                             'COSTAS: Pulley Frente, Remada curvada\n'
+                             'PERNAS: Leg press, Flexora\n',
+
+                             '2': '3 Séries de 15-20 repetições com 30s de descanso entre elas\n'
+                             'PEITO: Flexão de Braços, Crucifixo inclinado\n'
+                             'COSTAS: Crucifixo invertido, Pull over\n'
+                             'PERNAS: Adução de coxa, Panturrilha Sentado\n',
+
+                             '3': '4 Séries de 4-6 repetições com 2 min de descanso entre elas\n'
+                             'PEITO: Voador, Supino declinado\n'
+                             'COSTAS: Remada Baixa, Pull down\n'
+                             'PERNAS: Agachamento, Abdução de coxa\n'}
+            if obj == 1:
+                resultado = dict_objetivo['1']
+            elif obj == 2:
+                resultado = dict_objetivo['2']
+            elif obj == 3:
+                resultado = dict_objetivo['3']
+            L=Label(janela, text=resultado)
+            L.grid(row=13, column=0,columnspan=4, sticky=W)
+        arquivo = open("dados.txt", "a+")
         numc=(int(entrada4.get())*6)
         arquivo.seek(0)
-        listadados=arquivo.readlines()#ler arquivo de dados e colocar em lista
-        obj=listadados[numc-1]
+        listadados=arquivo.readlines()
+        obj=int(listadados[numc-1])
         celular=listadados[numc-2]
         altura=float(listadados[numc-3])
         peso=float(listadados[numc-4])
@@ -63,14 +83,18 @@ def consulta():
         nome=listadados[numc-6]
         IMC=calculo_imc(peso, altura)
         Label(janela, text='Nome:', bg='white', fg='black', font='None 12 ').grid(row=4, column=0, sticky=W)
-        Label(janela, text='%s'%nome, bg='white', fg='black', font='None 12 ').grid(row=5, column=0,columnspan=2, sticky=W)
-        Label(janela, text='Idade:%d'%idade, bg='white', fg='black', font='None 12 ').grid(row=6, column=0, sticky=W)
-        Label(janela, text='Peso:%.2f'%peso, bg='white', fg='black', font='None 12 ').grid(row=7, column=0, sticky=W)
-        Label(janela, text='Altura:%.2f'%altura, bg='white', fg='black', font='None 12 ').grid(row=8, column=0, sticky=W)
+        N=Label(janela, text=' '*50, bg='white', fg='black', font='None 12 ')
+        N.grid(row=5, column=0,columnspan=2, sticky=W)
+        N=Label(janela, text=nome, bg='white', fg='black', font='None 12 ')
+        N.grid(row=5, column=0,columnspan=2, sticky=W)
+        Label(janela, text='Idade:%d anos'%idade, bg='white', fg='black', font='None 12 ').grid(row=6, column=0, sticky=W)
+        Label(janela, text='Peso:%.2f kg'%peso, bg='white', fg='black', font='None 12 ').grid(row=7, column=0, sticky=W)
+        Label(janela, text='Altura:%.2f m'%altura, bg='white', fg='black', font='None 12 ').grid(row=8, column=0, sticky=W)
         Label(janela, text='Telefone:%s'%celular, bg='white', fg='black', font='None 12 ').grid(row=10, column=0,columnspan=2, sticky=W)
         Label(janela, text='IMC:%.2f'% IMC, bg='white', fg='black', font='None 12 ').grid(row=9, column=0, sticky=W)
-        Label(janela, text='Objetivo:  %s\n1:Hipertrofia\n2:Emagrecimento\n3:Potência'%obj).grid(row=11, column=0, sticky=W)
-        
+        Label(janela, text='Objetivo:  %s'%obj).grid(row=11, column=0, sticky=W)
+        Button(janela, text='Consultar rotina', command=rotina).grid(row=12, column=0, sticky=W)
+    
     janela=Tk()
     janela.title('Consulta')
     janela.configure(background="white")
@@ -82,10 +106,35 @@ def consulta():
         
     Button(janela, text='Consultar', command=pegardados).grid(row=3, column=1, sticky=W)
 def info():
+    arquivo = open("dados.txt", "a+")
+    arquivo.seek(0)
+    lista_dados=arquivo.readlines()
+    soma_idades = 0
+    soma_pesos = 0
+    soma_alturas = 0
+    soma_imc = 0
+    for i in range(0, len(lista_dados),6):
+        soma_idades += int(lista_dados[i+1])
+        
+        soma_pesos += float(lista_dados[i+2])
+        
+        soma_alturas += float(lista_dados[i+3])
+
+        imc=float(lista_dados[i+2])/float(lista_dados[i+3])**2
+        
+        soma_imc += imc
+
+    media_idades = (soma_idades) / (len(lista_dados)/6)
+    media_pesos = (soma_pesos) / (len(lista_dados)/6)
+    media_alturas = (soma_alturas) / (len(lista_dados)/6)
+    media_imc = (soma_imc) / (len(lista_dados)/6)
+
     janela=Tk()
     janela.title('Informações')
     janela.configure(background="white")
-    Label(janela, text="Informações dos cadastrados:", bg='white', fg='black', font='None 14 bold').grid(row=1, column=0, sticky=W)
-    Label(janela, text="Média de altura:", bg='white', fg='black', font='None 12 ').grid(row=2, column=0, sticky=W)
-    Label(janela, text="Média de peso:", bg='white', fg='black', font='None 12 ').grid(row=3, column=0, sticky=W)
-    Label(janela, text="Média de IMC:", bg='white', fg='black', font='None 12 ').grid(row=4, column=0, sticky=W)
+    Label(janela, text="Informações dos cadastrados:", bg='white', fg='black', font='None 14 bold').grid(row=0, column=0, sticky=W)
+    Label(janela, text="Média das idades:%.2f anos"%media_idades, bg='white', fg='black', font='None 12 ').grid(row=1, column=0, sticky=W)
+    Label(janela, text="Média das alturas:%.2f m"%media_alturas, bg='white', fg='black', font='None 12 ').grid(row=2, column=0, sticky=W)
+    Label(janela, text="Média dos pesos:%.2f kg"%media_pesos, font='None 12 ').grid(row=3, column=0, sticky=W)
+    Label(janela, text="Média do IMC:%.2f"%media_imc, bg='white', fg='black', font='None 12 ').grid(row=4, column=0, sticky=W)
+
