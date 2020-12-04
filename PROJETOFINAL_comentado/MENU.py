@@ -1,3 +1,8 @@
+'''
+Arthur Lamarck
+Gabriel Napy
+Jonathan Marques
+'''
 from tkinter import *
 from LIBCONTADOR import *
 janela=Tk()

@@ -2,24 +2,23 @@ from tkinter import *
 
 def cadastro():
     def salvadados():
-        arquivo = open("dados.txt", "a+")#abre arquivo dos dados
-        nome=entrada1.get()#recebe oq foi escrito em entrada1
-        idade=entrada2.get()#recebe entrada2
-        peso=entrada3.get()#recebe entrada3
-        altura=entrada4.get()#recebe entrada4
-        celular=entrada5.get()#recebe entrada5
-        objetivo=entrada6.get()#recebe entrada6
-        listadados=[f'\n{nome}\n{idade}\n{peso}\n{altura}\n{celular}\n{objetivo}']#coloca oq foi escrito na lista
-        arquivo.writelines(listadados)#escreve a lista no arquivo de dados(cada elemento, uma linha)
+        arquivo = open("dados.txt", "a+")
+        nome=entrada1.get()
+        idade=entrada2.get()
+        peso=entrada3.get()
+        altura=entrada4.get()
+        celular=entrada5.get()
+        objetivo=entrada6.get()
+        listadados=[f'\n{nome}\n{idade}\n{peso}\n{altura}\n{celular}\n{objetivo}']
+        arquivo.writelines(listadados)
+        janela.destroy()
         arquivo.close()
     arquivo = open("dados.txt", "a+")
     arquivo.seek(0)
-    ncad=(len(arquivo.readlines())/6)+1#Numero do cadastro
+    ncad=(len(arquivo.readlines())/6)+1
     janela=Tk()
     janela.title('Cadastro')
-    #botão cadastrar chama função salvadados
     Button(janela, text="Cadastrar",width=22, bg='white', fg='black',command=salvadados, font='None 14 bold').grid(row=8, column=0,columnspan=3, sticky=W)
-    #cria entradas e joga dentro da janela
     entrada1=Entry(janela, width=25, bg='white')
     entrada1.grid(row=1, column=1, sticky=W)
     entrada2=Entry(janela, width=25, bg='white')
@@ -68,10 +67,10 @@ def consulta():
                 resultado = dict_objetivo['3']
             L=Label(janela, text=resultado)
             L.grid(row=13, column=0,columnspan=4, sticky=W)
-        arquivo = open("dados.txt", "a+")#abre arquivo dos dados
+        arquivo = open("dados.txt", "a+")
         numc=(int(entrada4.get())*6)
         arquivo.seek(0)
-        listadados=arquivo.readlines()#ler arquivo de dados e colocar em lista,após o cadastro
+        listadados=arquivo.readlines()
         obj=int(listadados[numc-1])
         celular=listadados[numc-2]
         altura=float(listadados[numc-3])
