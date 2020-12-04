@@ -1,0 +1,36 @@
+Arthur Lamarck
+12
+40
+1.50
+94002-8922
+1
+Gabriel Napy
+22
+60
+1.84
+99989-9898
+3
+Victor Augusto
+17
+53
+1.75
+99986-5329
+3
+Yudi Medeiros
+28
+75
+1.65
+94002-8933
+2
+Isabella Lira
+18
+52
+1.59
+99857-2541
+3
+Jonathan Marques
+19
+65
+1.67
+98663-2507
+1
